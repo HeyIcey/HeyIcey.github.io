@@ -8,6 +8,10 @@ function init() {
     // scene
     var scene = new THREE.Scene();
 
+    // 设置灯光
+    var light = new THREE.PointLight(0xffffff, 2, 100);
+    light.position.set(20, 20, 9);
+    scene.add(light);
     // camera
     var camera = new THREE.OrthographicCamera(-2, 2, 1.5, -1.5, 5, 20);
     camera.position.set(5, 5, 5);
@@ -18,7 +22,7 @@ function init() {
     var carBody = new THREE.CubeGeometry(2, 1, 1);
 
     var cube = new THREE.Mesh(carBody,
-            new THREE.MeshBasicMaterial({
+            new THREE.MeshLambertMaterial({
                 color: 0xC9C9C9
             })
     );
@@ -28,22 +32,22 @@ function init() {
     var carCircle = new THREE.TorusGeometry(0.2, 0.06, 52, 48);
 
     var carCircle1 = new THREE.Mesh(carCircle,
-            new THREE.MeshBasicMaterial({
+            new THREE.MeshLambertMaterial({
                 color: 0xC9C9C9
             })
     );
     var carCircle2 = new THREE.Mesh(carCircle,
-            new THREE.MeshBasicMaterial({
+            new THREE.MeshLambertMaterial({
                 color: 0xC9C9C9
             })
     );
     var carCircle3 = new THREE.Mesh(carCircle,
-            new THREE.MeshBasicMaterial({
+            new THREE.MeshLambertMaterial({
                 color: 0xC9C9C9
             })
     );
     var carCircle4 = new THREE.Mesh(carCircle,
-            new THREE.MeshBasicMaterial({
+            new THREE.MeshLambertMaterial({
                 color: 0xC9C9C9
             })
     );
