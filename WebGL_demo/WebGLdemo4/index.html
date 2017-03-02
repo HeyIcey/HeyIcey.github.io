@@ -67,30 +67,57 @@
         controls.noPan = false;
         controls.addEventListener('change', render);
 
-        var plane = new THREE.Mesh(new THREE.PlaneGeometry(8, 8, 16, 16),
-            new THREE.MeshLambertMaterial({
-                color: 0x9D74B2
-            }));
-        plane.rotation.x = -Math.PI / 2;
+        // plane
+        var texture = THREE.ImageUtils.loadTexture('1.png', {}, function() {
+            renderer.render(scene, camera);
+        });
+        plane = new THREE.Mesh(new THREE.PlaneGeometry(8, 8), new THREE.MeshLambertMaterial({
+            map: texture
+        }));
+        plane.rotation.x = -Math.PI * 0.5;
         plane.position.y = -1;
         plane.receiveShadow = true;
         scene.add(plane);
+        // var plane = new THREE.Mesh(new THREE.PlaneGeometry(8, 8, 16, 16),
+        //     new THREE.MeshLambertMaterial({
+        //         color: 0x9D74B2
+        //     }));
+        // plane.rotation.x = -Math.PI / 2;
+        // plane.position.y = -1;
+        // plane.receiveShadow = true;
+        // scene.add(plane);
 
         // material
-        var material = new THREE.MeshLambertMaterial({
-            color: 0xC9C9C9
-        });
-        //carBody 
-        var carBody = new THREE.CubeGeometry(2, 1, 1);
-        var cube = new THREE.Mesh(carBody, material);
-        scene.add(cube);
+        var materials = [];
+            for (var i = 1; i < 7; ++i) {
+                materials.push(new THREE.MeshBasicMaterial({
+                    map: THREE.ImageUtils.loadTexture('face' + i + '.jpg',
+                            {}, function() {
+                                renderer.render(scene, camera);
+                            }),
+                    overdraw: true
+                }));
+            }
+
+            var cube = new THREE.Mesh(new THREE.CubeGeometry(2, 1, 1),
+                    new THREE.MeshFaceMaterial(materials));
+            cube.castShadow = true;
+            cube.reveiveShadow = true;
+            scene.add(cube);
+        // //carBody 
+        // var carBody = new THREE.CubeGeometry(2, 1, 1);
+        // var cube = new THREE.Mesh(carBody, material);
+        // scene.add(cube);
 
         // // carCircle
+        var tire = THREE.ImageUtils.loadTexture('luntai.jpg', {}, function() {renderer.render(scene, camera);});
+        var tireMaterial =  new THREE.MeshLambertMaterial({map: tire});
         var carCircle = new THREE.TorusGeometry(0.2, 0.06, 52, 48);
-        var carCircle1 = new THREE.Mesh(carCircle, material);
-        var carCircle2 = new THREE.Mesh(carCircle, material);
-        var carCircle3 = new THREE.Mesh(carCircle, material);
-        var carCircle4 = new THREE.Mesh(carCircle, material);
+
+        var carCircle1 = new THREE.Mesh(carCircle, tireMaterial);
+        var carCircle2 = new THREE.Mesh(carCircle, tireMaterial);
+        var carCircle3 = new THREE.Mesh(carCircle, tireMaterial);
+        var carCircle4 = new THREE.Mesh(carCircle, tireMaterial);
         scene.add(carCircle1);
         scene.add(carCircle2);
         scene.add(carCircle3);
