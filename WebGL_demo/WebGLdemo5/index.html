@@ -179,11 +179,15 @@
                     function drawLeft() {
                         stat.begin();
                         cube.position.z = cube.position.z + 0.01;
+                        carCircle1.position.z = carCircle1.position.z + 0.01;
+                        carCircle2.position.z = carCircle2.position.z + 0.01;
+                        carCircle3.position.z = carCircle3.position.z + 0.01;
+                        carCircle4.position.z = carCircle4.position.z + 0.01;
                         // cube.rotation.y = (cube.rotation.y + 0.01) % (Math.PI * 2);
-                        carCircle1.rotation.y = (cube.rotation.y + 0.01) % (Math.PI * 2);
-                        carCircle2.rotation.y = (cube.rotation.y + 0.01) % (Math.PI * 2);
-                        carCircle3.rotation.y = (cube.rotation.y + 0.01) % (Math.PI * 2);
-                        carCircle4.rotation.y = (cube.rotation.y + 0.01) % (Math.PI * 2);
+                        // carCircle1.rotation.y = (cube.rotation.y + 0.01) % (Math.PI * 2);
+                        // carCircle2.rotation.y = (cube.rotation.y + 0.01) % (Math.PI * 2);
+                        // carCircle3.rotation.y = (cube.rotation.y + 0.01) % (Math.PI * 2);
+                        // carCircle4.rotation.y = (cube.rotation.y + 0.01) % (Math.PI * 2);
                         renderer.render(scene, camera);
                         id = requestAnimationFrame(drawLeft);
                         stat.end()
@@ -194,7 +198,7 @@
 
                     function drawRight() {
                         stat.begin();
-                        cube.position.z = cube.position.z + 0.01;
+                        cube.position.z = cube.position.z - 0.01;
                         // cube.rotation.y = (cube.rotation.y - 0.01) % (Math.PI * 2);
                         carCircle1.position.z = carCircle1.position.z - 0.01;
                         carCircle2.position.z = carCircle2.position.z - 0.01;
