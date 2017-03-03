@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WebGL No.5 - 动画</title>
+    <script type="text/javascript" src="three.js"></script>
+    <script type="text/javascript" src="stats.min.js"></script>
+    <script type="text/javascript" src="TrackballControls.js"></script>
+    <script type="text/javascript" src="Decector.js"></script>
+</head>
+
+<body id="center" onload="init()">
+    <div>
+        <canvas id="mainCanvas"></canvas>
+    </div>
+    <script type="text/javascript">
+    var flag = false;
+
+    function init() {
+        var stat = new Stats();
+        stat.domElement.style.position = 'absolute';
+        stat.domElement.style.left = '0px';
+        stat.domElement.style.top = '0px';
+        document.body.appendChild(stat.domElement);
+
+        // renderer
+        var renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('mainCanvas')
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMapEnabled = true;
+        renderer.shadowMapSoft = true;
+
+        renderer.setClearColor(0x666666);
+        renderer.shadowMapEnabled = true; //在初始化时，告诉渲染器渲染阴影
+        // scene
+        var scene = new THREE.Scene();
+
+        // light
+        var light = new THREE.SpotLight(0xffffff, 1, 100, Math.PI / 6, 25);
+        light.position.set(5, 15, 9);
+        light.castShadow = true;
+
+        light.shadowCameraNear = 2;
+        light.shadowCameraFar = 10;
+        light.shadowCameraFov = 30;
+        light.shadowCameraVisible = true;
+        light.shadowMapWidth = 1024;
+        light.shadowMapHeight = 1024;
+        light.shadowDarkness = 0.3;
+
+        scene.add(light);
+
+        // camera
+        var camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 500);
+        camera.position.set(5, 5, 5);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+        scene.add(camera);
+
+        // TrackballControls
+        controls = new THREE.TrackballControls(camera);
+
+        controls.rotateSpeed = 1.0; //旋转速度  鼠标左键控制
+        controls.zoomSpeed = 1.2; //缩放速度  鼠标滚轮控制
+        controls.panSpeed = 0.8; //平移速度  鼠标右键控制
+
+        controls.noZoom = false;
+        controls.noPan = false;
+        controls.addEventListener('change', render);
+
+        // plane
+        var texture = THREE.ImageUtils.loadTexture('1.png', {}, function() {
+            renderer.render(scene, camera);
+        });
+        plane = new THREE.Mesh(new THREE.PlaneGeometry(8, 8), new THREE.MeshLambertMaterial({
+            map: texture,
+            side: THREE.DoubleSide
+        }));
+        plane.rotation.x = -Math.PI * 0.5;
+        plane.position.y = -0.75;
+        plane.receiveShadow = true;
+        scene.add(plane);
+       
+
+        // material
+        var materials = [];
+        for (var i = 1; i < 7; ++i) {
+            materials.push(new THREE.MeshBasicMaterial({
+                map: THREE.ImageUtils.loadTexture('face' + i + '.jpg', {}, function() {
+                    renderer.render(scene, camera);
+                }),
+                overdraw: true
+            }));
+        }
+
+        var cube = new THREE.Mesh(new THREE.CubeGeometry(2, 1, 1),
+            new THREE.MeshFaceMaterial(materials));
+        cube.castShadow = true;
+        cube.reveiveShadow = true;
+        scene.add(cube);
+       
+        // // carCircle
+        var tire = THREE.ImageUtils.loadTexture('luntai.jpg', {}, function() {
+            renderer.render(scene, camera);
+        });
+        var tireMaterial = new THREE.MeshLambertMaterial({
+            map: tire
+        });
+        var carCircle = new THREE.TorusGeometry(0.2, 0.06, 52, 48);
+
+        var carCircle1 = new THREE.Mesh(carCircle, tireMaterial);
+        var carCircle2 = new THREE.Mesh(carCircle, tireMaterial);
+        var carCircle3 = new THREE.Mesh(carCircle, tireMaterial);
+        var carCircle4 = new THREE.Mesh(carCircle, tireMaterial);
+        scene.add(carCircle1);
+        scene.add(carCircle2);
+        scene.add(carCircle3);
+        scene.add(carCircle4);
+        carCircle1.position.set(-0.5, -0.5, 0.5);
+        carCircle2.position.set(0.5, -0.5, 0.5);
+        carCircle3.position.set(-0.5, -0.5, -0.5);
+        carCircle4.position.set(0.5, -0.5, -0.5);
+
+        //对于光源以及所有要产生阴影的物体调用
+        cube.castShadow = true;
+        carCircle1.castShadow = true;
+        carCircle2.castShadow = true;
+        carCircle3.castShadow = true;
+        carCircle4.castShadow = true;
+
+        // animation
+        var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+        window.requestAnimationFrame = requestAnimationFrame;
+
+        var center = document.getElementById("center");
+        var handler = function(event) {
+            if (!flag) {
+                flag = true
+            } else {
+                return
+            }
+
+            switch (event.keyCode) {
+                case 87:
+
+                    id = requestAnimationFrame(drawUp);
+
+                    function drawUp() {
+                        stat.begin();
+                        cube.position.x = cube.position.x + 0.01;
+                        carCircle1.position.x = carCircle1.position.x + 0.01;
+                        carCircle2.position.x = carCircle2.position.x + 0.01;
+                        carCircle3.position.x = carCircle3.position.x + 0.01;
+                        carCircle4.position.x = carCircle4.position.x + 0.01;
+                        renderer.render(scene, camera);
+                        id = requestAnimationFrame(drawUp);
+                        stat.end();
+                    }
+                    break;
+                case 83:
+                    id = requestAnimationFrame(drawDown);
+
+                    function drawDown() {
+                        stat.begin();
+                        cube.position.x = cube.position.x - 0.01;
+                        carCircle1.position.x = carCircle1.position.x - 0.01;
+                        carCircle2.position.x = carCircle2.position.x - 0.01;
+                        carCircle3.position.x = carCircle3.position.x - 0.01;
+                        carCircle4.position.x = carCircle4.position.x - 0.01;
+                        renderer.render(scene, camera);
+                        id = requestAnimationFrame(drawDown);
+                        stat.end()
+                    }
+                    break;
+                case 65:
+                    id = requestAnimationFrame(drawLeft);
+
+                    function drawLeft() {
+                        stat.begin();
+                        cube.position.z = cube.position.z + 0.01;
+                        carCircle1.position.z = carCircle1.position.z + 0.01;
+                        carCircle2.position.z = carCircle2.position.z + 0.01;
+                        carCircle3.position.z = carCircle3.position.z + 0.01;
+                        carCircle4.position.z = carCircle4.position.z + 0.01;
+                        renderer.render(scene, camera);
+                        id = requestAnimationFrame(drawLeft);
+                        stat.end()
+                    }
+                    break;
+                case 68:
+                    id = requestAnimationFrame(drawRight);
+
+                    function drawRight() {
+                        stat.begin();
+                        cube.position.z = cube.position.z - 0.01;
+                        carCircle1.position.z = carCircle1.position.z - 0.01;
+                        carCircle2.position.z = carCircle2.position.z - 0.01;
+                        carCircle3.position.z = carCircle3.position.z - 0.01;
+                        carCircle4.position.z = carCircle4.position.z - 0.01;
+                        renderer.render(scene, camera);
+                        id = requestAnimationFrame(drawRight);
+                        stat.end()
+                    }
+                    break;
+            }
+        }
+
+        function stop() {
+            if (flag) {
+                flag = false;
+            } else {
+                return
+            }
+            if (id !== null) {
+                cancelAnimationFrame(id);
+                id = null;
+            }
+        }
+
+        center.addEventListener('keydown', handler, false);
+        center.addEventListener('keyup', stop, false);
+
+        // render
+        function render() {
+            renderer.render(scene, camera);
+            stat.update();
+        }
+        // render();
+    }
+
+    function animate() {
+
+        requestAnimationFrame(animate);
+        controls.update();
+
+    }
+    init();
+    animate();
+    </script>
+</body>
+
+</html>
