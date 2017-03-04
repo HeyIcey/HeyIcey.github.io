@@ -38,7 +38,8 @@
         var scene = new THREE.Scene();
 
         // light
-        var light = new THREE.SpotLight(0xffffff, 1, 100, Math.PI / 6, 25);
+        var ambientLight = new THREE.AmbientLight(0xaaaaaa);
+        var light = new THREE.SpotLight(0xffffff, 2, 100, Math.PI / 6, 25);
         light.position.set(5, 15, 9);
         light.castShadow = true;
 
@@ -50,11 +51,12 @@
         light.shadowMapHeight = 1024;
         light.shadowDarkness = 0.3;
 
+        scene.add(ambientLight);
         scene.add(light);
 
         // camera
         var camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 500);
-        camera.position.set(5, 5, 5);
+        camera.position.set(5, 5, 15);
         camera.lookAt(new THREE.Vector3(0, 0, 0));
         scene.add(camera);
 
@@ -73,8 +75,11 @@
         var texture = THREE.ImageUtils.loadTexture('1.png', {}, function() {
             renderer.render(scene, camera);
         });
-        plane = new THREE.Mesh(new THREE.PlaneGeometry(8, 8), new THREE.MeshLambertMaterial({
+        // texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        // texture.repeat.set(8, 8);
+        plane = new THREE.Mesh(new THREE.PlaneGeometry(16, 16), new THREE.MeshLambertMaterial({
             map: texture,
+            color: 0xffffff,
             side: THREE.DoubleSide
         }));
         plane.rotation.x = -Math.PI * 0.5;
@@ -148,11 +153,13 @@
 
                     function drawUp() {
                         stat.begin();
-                        cube.position.x = cube.position.x + 0.01;
-                        carCircle1.position.x = carCircle1.position.x + 0.01;
-                        carCircle2.position.x = carCircle2.position.x + 0.01;
-                        carCircle3.position.x = carCircle3.position.x + 0.01;
-                        carCircle4.position.x = carCircle4.position.x + 0.01;
+                        carMove(1);
+                        // car.position.x = car.position.x + 0.01;
+                        // cube.position.x = cube.position.x + 0.01;
+                        // carCircle1.position.x = carCircle1.position.x + 0.01;
+                        // carCircle2.position.x = carCircle2.position.x + 0.01;
+                        // carCircle3.position.x = carCircle3.position.x + 0.01;
+                        // carCircle4.position.x = carCircle4.position.x + 0.01;
                         renderer.render(scene, camera);
                         id = requestAnimationFrame(drawUp);
                         stat.end();
@@ -163,11 +170,13 @@
 
                     function drawDown() {
                         stat.begin();
-                        cube.position.x = cube.position.x - 0.01;
-                        carCircle1.position.x = carCircle1.position.x - 0.01;
-                        carCircle2.position.x = carCircle2.position.x - 0.01;
-                        carCircle3.position.x = carCircle3.position.x - 0.01;
-                        carCircle4.position.x = carCircle4.position.x - 0.01;
+                        carMove(-1);
+                        // car.position.x = car.position.x - 0.01;
+                        // cube.position.x = cube.position.x - 0.01;
+                        // carCircle1.position.x = carCircle1.position.x - 0.01;
+                        // carCircle2.position.x = carCircle2.position.x - 0.01;
+                        // carCircle3.position.x = carCircle3.position.x - 0.01;
+                        // carCircle4.position.x = carCircle4.position.x - 0.01;
                         renderer.render(scene, camera);
                         id = requestAnimationFrame(drawDown);
                         stat.end()
@@ -178,11 +187,13 @@
 
                     function drawLeft() {
                         stat.begin();
-                        cube.position.z = cube.position.z + 0.01;
-                        carCircle1.position.z = carCircle1.position.z + 0.01;
-                        carCircle2.position.z = carCircle2.position.z + 0.01;
-                        carCircle3.position.z = carCircle3.position.z + 0.01;
-                        carCircle4.position.z = carCircle4.position.z + 0.01;
+                        // carMove(1);
+                        car.rotation.y = car.rotation.y + 0.01;
+                        // cube.position.z = cube.position.z + 0.01;
+                        // carCircle1.position.z = carCircle1.position.z + 0.01;
+                        // carCircle2.position.z = carCircle2.position.z + 0.01;
+                        // carCircle3.position.z = carCircle3.position.z + 0.01;
+                        // carCircle4.position.z = carCircle4.position.z + 0.01;
                         // cube.rotation.y = (cube.rotation.y + 0.01) % (Math.PI * 2);
                         // carCircle1.rotation.y = (cube.rotation.y + 0.01) % (Math.PI * 2);
                         // carCircle2.rotation.y = (cube.rotation.y + 0.01) % (Math.PI * 2);
@@ -198,12 +209,14 @@
 
                     function drawRight() {
                         stat.begin();
-                        cube.position.z = cube.position.z - 0.01;
-                        // cube.rotation.y = (cube.rotation.y - 0.01) % (Math.PI * 2);
-                        carCircle1.position.z = carCircle1.position.z - 0.01;
-                        carCircle2.position.z = carCircle2.position.z - 0.01;
-                        carCircle3.position.z = carCircle3.position.z - 0.01;
-                        carCircle4.position.z = carCircle4.position.z - 0.01;
+                        // carMove(-2);
+                        car.rotation.y = car.rotation.y - 0.01;
+                        // cube.position.z = cube.position.z - 0.01;
+                        // // cube.rotation.y = (cube.rotation.y - 0.01) % (Math.PI * 2);
+                        // carCircle1.position.z = carCircle1.position.z - 0.01;
+                        // carCircle2.position.z = carCircle2.position.z - 0.01;
+                        // carCircle3.position.z = carCircle3.position.z - 0.01;
+                        // carCircle4.position.z = carCircle4.position.z - 0.01;
                         renderer.render(scene, camera);
                         id = requestAnimationFrame(drawRight);
                         stat.end()
@@ -211,7 +224,28 @@
                     break;
             }
         }
+        var car;
 
+        function initCar() {
+            car = new THREE.Object3D();
+            car.add(cube);
+            car.add(carCircle1);
+            car.add(carCircle2);
+            car.add(carCircle3);
+            car.add(carCircle4);
+            scene.add(car);
+        }
+        initCar();
+
+        // 小車移動
+        function carMove(moveOn) {
+            var carDirection = car.getWorldDirection();
+            carDirection.applyAxisAngle((new THREE.Vector3(0, 1, 0)).normalize(), Math.PI / 2);
+            var theta = Math.atan2(carDirection.x, carDirection.z);
+            car.position.x += .1 * moveOn * Math.sin(theta);
+            car.position.z += .1 * moveOn * Math.cos(theta);
+            render();
+        }
         function stop() {
             if (flag) {
                 flag = false;
@@ -237,8 +271,8 @@
 
     function animate() {
 
+        // controls.update();
         requestAnimationFrame(animate);
-        controls.update();
 
     }
     init();
