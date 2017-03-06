@@ -17,6 +17,7 @@
     }
     h1 {
         text-align: center;
+        background: #ccc;
     }
     </style>
 </head>
@@ -175,12 +176,12 @@
 
         var onProgress = function(xhr) {
             var ele = document.getElementById("jindu");
-            //ele.className = "info"
-            var baifenshu = 100 * xhr.loaded / xhr.total;
-            baifenshu = baifenshu - baifenshu % 1;
-            ele.innerHTML = baifenshu;
-            //document.write(xhr.loaded/xhr.total);
-            console.log(xhr.loaded / xhr.total);
+            var baifenbi = 100*xhr.loaded/xhr.total;
+            baifenbi = baifenbi-baifenbi%1;
+            ele.innerHTML = baifenbi;
+            if (xhr.lengthComputable) {
+                var percentcomplete = xhr.load / xhr.total * 100;
+            }
         }
         var onError = function(xhr) {}
 
