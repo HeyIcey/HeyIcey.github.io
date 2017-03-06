@@ -240,29 +240,30 @@
             }
 
             switch (event.keyCode) {
-                case 87:
+                case 83:
 
                     id = requestAnimationFrame(drawUp);
 
                     function drawUp() {
                         stat.begin();
-                        carMove(1);
+                        carMove(5);
                         renderer.render(scene, camera);
                         id = requestAnimationFrame(drawUp);
                         stat.end();
                     }
                     break;
-                case 83:
+                case 87:
                     id = requestAnimationFrame(drawDown);
 
                     function drawDown() {
                         stat.begin();
-                        carMove(-1);
+                        carMove(-5);
                         renderer.render(scene, camera);
                         id = requestAnimationFrame(drawDown);
                         stat.end()
                     }
                     break;
+                    
                 case 65:
                     id = requestAnimationFrame(drawLeft);
 
