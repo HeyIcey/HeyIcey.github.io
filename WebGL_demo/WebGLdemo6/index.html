@@ -174,11 +174,11 @@
         // 外部模型
 
         var onProgress = function(xhr) {
-            var ele = document.getElementById("jindu");
-            var baifenbi = 100*xhr.loaded/xhr.total;
-            baifenbi = baifenbi-baifenbi%1;
-            ele.innerHTML = baifenbi;
             if (xhr.lengthComputable) {
+                var ele = document.getElementById("jindu");
+                var baifenbi = 100*xhr.loaded/xhr.total;
+                baifenbi = baifenbi-baifenbi%1;
+                ele.innerHTML = baifenbi;
                 var percentcomplete = xhr.load / xhr.total * 100;
             }
         }
