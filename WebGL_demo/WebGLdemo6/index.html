@@ -126,59 +126,59 @@
         //carBody 
         // material
 
-        var materials = [];
-        for (var i = 1; i < 7; ++i) {
-            materials.push(new THREE.MeshBasicMaterial({
-                map: THREE.ImageUtils.loadTexture('face' + i + '.jpg', {}, function() {
-                    renderer.render(scene, camera);
-                }),
-                overdraw: true
-            }));
-        }
+        // var materials = [];
+        // for (var i = 1; i < 7; ++i) {
+        //     materials.push(new THREE.MeshBasicMaterial({
+        //         map: THREE.ImageUtils.loadTexture('face' + i + '.jpg', {}, function() {
+        //             renderer.render(scene, camera);
+        //         }),
+        //         overdraw: true
+        //     }));
+        // }
 
-        var cube = new THREE.Mesh(new THREE.CubeGeometry(2, 1, 1),
-            new THREE.MeshFaceMaterial(materials));
-        scene.add(cube);
-
-
-        //  carCircle
-
-        var tire = THREE.ImageUtils.loadTexture('luntai.jpg', {}, function() {
-            renderer.render(scene, camera);
-        });
-        var tireMaterial = new THREE.MeshLambertMaterial({
-            map: tire
-        });
-        var carCircle = new THREE.TorusGeometry(0.2, 0.06, 52, 48);
-
-        var carCircle1 = new THREE.Mesh(carCircle, tireMaterial);
-        var carCircle2 = new THREE.Mesh(carCircle, tireMaterial);
-        var carCircle3 = new THREE.Mesh(carCircle, tireMaterial);
-        var carCircle4 = new THREE.Mesh(carCircle, tireMaterial);
+        // var cube = new THREE.Mesh(new THREE.CubeGeometry(2, 1, 1),
+        //     new THREE.MeshFaceMaterial(materials));
+        // scene.add(cube);
 
 
-        scene.add(carCircle1);
-        scene.add(carCircle2);
-        scene.add(carCircle3);
-        scene.add(carCircle4);
-        carCircle1.position.set(-0.5, -0.5, 0.5);
-        carCircle2.position.set(0.5, -0.5, 0.5);
-        carCircle3.position.set(-0.5, -0.5, -0.5);
-        carCircle4.position.set(0.5, -0.5, -0.5);
+        // //  carCircle
 
-        car = new THREE.Object3D();
-        car.add(cube);
-        car.add(carCircle1);
-        car.add(carCircle2);
-        car.add(carCircle3);
-        car.add(carCircle4);
-        car.position.set(0, 0, 0);
-        //对于光源以及所有要产生阴影的物体调用
-        cube.castShadow = true;
-        carCircle1.castShadow = true;
-        carCircle2.castShadow = true;
-        carCircle3.castShadow = true;
-        carCircle4.castShadow = true;
+        // var tire = THREE.ImageUtils.loadTexture('luntai.jpg', {}, function() {
+        //     renderer.render(scene, camera);
+        // });
+        // var tireMaterial = new THREE.MeshLambertMaterial({
+        //     map: tire
+        // });
+        // var carCircle = new THREE.TorusGeometry(0.2, 0.06, 52, 48);
+
+        // var carCircle1 = new THREE.Mesh(carCircle, tireMaterial);
+        // var carCircle2 = new THREE.Mesh(carCircle, tireMaterial);
+        // var carCircle3 = new THREE.Mesh(carCircle, tireMaterial);
+        // var carCircle4 = new THREE.Mesh(carCircle, tireMaterial);
+
+
+        // scene.add(carCircle1);
+        // scene.add(carCircle2);
+        // scene.add(carCircle3);
+        // scene.add(carCircle4);
+        // carCircle1.position.set(-0.5, -0.5, 0.5);
+        // carCircle2.position.set(0.5, -0.5, 0.5);
+        // carCircle3.position.set(-0.5, -0.5, -0.5);
+        // carCircle4.position.set(0.5, -0.5, -0.5);
+
+        // car = new THREE.Object3D();
+        // car.add(cube);
+        // car.add(carCircle1);
+        // car.add(carCircle2);
+        // car.add(carCircle3);
+        // car.add(carCircle4);
+        // car.position.set(0, 0, 0);
+        // //对于光源以及所有要产生阴影的物体调用
+        // cube.castShadow = true;
+        // carCircle1.castShadow = true;
+        // carCircle2.castShadow = true;
+        // carCircle3.castShadow = true;
+        // carCircle4.castShadow = true;
 
 
 
