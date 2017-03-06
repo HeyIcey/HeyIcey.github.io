@@ -263,7 +263,7 @@
                         stat.end()
                     }
                     break;
-                    
+
                 case 65:
                     id = requestAnimationFrame(drawLeft);
 
@@ -293,7 +293,12 @@
             if (flag) {
                 flag = false;
             } else {
-                return
+                return;
+            }
+
+            if (id !== null) {
+                cancelAnimationFrame(id);
+                id = null;
             }
 
         }
