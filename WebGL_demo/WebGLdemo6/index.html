@@ -170,7 +170,6 @@
         // carCircle3.castShadow = true;
         // carCircle4.castShadow = true;
 
-        // car = new THREE.Object3D();
 
         // 外部模型
 
@@ -194,12 +193,11 @@
                 object.position.y = -0.75;
 
                 object.rotation.y = Math.PI * 0.5;
-                // scene.add(object);
+                scene.add(object);
                 car = new THREE.Object3D();
                 car = object;
 
                 car.position = object.position;
-                car.add(object);
 
                 scene.add(car);
                 render();
