@@ -7,7 +7,7 @@
     <script type="text/javascript" src="three.js"></script>
     <script type="text/javascript" src="stats.min.js"></script>
     <script type="text/javascript" src="TrackballControls.js"></script>
-    <script type="text/javascript" src="Decector.js"></script>
+    <!-- <script type="text/javascript" src="Decector.js"></script> -->
     <script type="text/javascript" src="MTLLoader.js"></script>
     <script type="text/javascript" src="OBJLoader.js"></script>
     <style>
@@ -178,7 +178,7 @@
 
         var mtlLoader = new THREE.MTLLoader();
         mtlLoader.load('car.mtl', function(materials) {
-            materials.preload();
+            // materials.preload();
             var objLoader = new THREE.OBJLoader();
             objLoader.setMaterials(materials);
             objLoader.load('car.obj', function(object) {
