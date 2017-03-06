@@ -33,6 +33,7 @@
     var flag = false;
     var loader;
     var id = null;
+
     //渲染器Renderer
     function initRenderer() {
         renderer = new THREE.WebGLRenderer({
@@ -106,7 +107,6 @@
         plane.position.y = -1;
         plane.receiveShadow = true;
         scene.add(plane);
-
 
 
         //carBody 
@@ -240,24 +240,24 @@
             }
 
             switch (event.keyCode) {
-                case 83:
+                case 87:
 
                     id = requestAnimationFrame(drawUp);
 
                     function drawUp() {
                         stat.begin();
-                        carMove(5);
+                        carMove(1);
                         renderer.render(scene, camera);
                         id = requestAnimationFrame(drawUp);
                         stat.end();
                     }
                     break;
-                case 87:
+                case 83:
                     id = requestAnimationFrame(drawDown);
 
                     function drawDown() {
                         stat.begin();
-                        carMove(-5);
+                        carMove(-1);
                         renderer.render(scene, camera);
                         id = requestAnimationFrame(drawDown);
                         stat.end()
@@ -294,10 +294,7 @@
             } else {
                 return
             }
-            if (id !== null) {
-                cancelAnimationFrame(id);
-                id = null;
-            }
+
         }
 
         center.addEventListener('keydown', handler, false);
