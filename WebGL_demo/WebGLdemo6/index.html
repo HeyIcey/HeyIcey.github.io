@@ -32,7 +32,7 @@
     var controls;
     var flag = false;
     var loader;
-
+    var id = null;
     //渲染器Renderer
     function initRenderer() {
         renderer = new THREE.WebGLRenderer({
@@ -51,7 +51,7 @@
     // 照相机Camera
     function initCamera() {
         camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
-        camera.position.set(3, 2, 20);
+        camera.position.set(300, 200, 200);
         camera.lookAt(new THREE.Vector3(0, 0, 0));
         scene.add(camera);
     }
@@ -96,7 +96,7 @@
         var texture = THREE.ImageUtils.loadTexture('1.png', {}, function() {
             renderer.render(scene, camera);
         });
-        plane = new THREE.Mesh(new THREE.PlaneGeometry(36, 36), new THREE.MeshLambertMaterial({
+        plane = new THREE.Mesh(new THREE.PlaneGeometry(960, 960), new THREE.MeshLambertMaterial({
             map: texture,
             side: THREE.DoubleSide
         }));
@@ -177,18 +177,18 @@
         var onError = function(xhr) {}
 
         var mtlLoader = new THREE.MTLLoader();
-        mtlLoader.load('car.mtl', function(materials) {
-            // materials.preload();
+        mtlLoader.load('BMWX54.mtl', function(materials) {
+            materials.preload();
             var objLoader = new THREE.OBJLoader();
             objLoader.setMaterials(materials);
-            objLoader.load('car.obj', function(object) {
+            objLoader.load('BMWX54.obj', function(object) {
                 object.position.y = -0.75;
 
                 object.rotation.y = Math.PI * 0.5;
-                // scene.add(object);
+                scene.add(object);
+                car = new THREE.Object3D();
                 car = object;
 
-                car = new THREE.Object3D();
                 car.position = object.position;
                 car.add(object);
 
@@ -240,24 +240,24 @@
             }
 
             switch (event.keyCode) {
-                case 87:
+                case 83:
 
                     id = requestAnimationFrame(drawUp);
 
                     function drawUp() {
                         stat.begin();
-                        carMove(1);
+                        carMove(5);
                         renderer.render(scene, camera);
                         id = requestAnimationFrame(drawUp);
                         stat.end();
                     }
                     break;
-                case 83:
+                case 87:
                     id = requestAnimationFrame(drawDown);
 
                     function drawDown() {
                         stat.begin();
-                        carMove(-1);
+                        carMove(-5);
                         renderer.render(scene, camera);
                         id = requestAnimationFrame(drawDown);
                         stat.end()
@@ -294,7 +294,10 @@
             } else {
                 return
             }
-            
+            if (id !== null) {
+                cancelAnimationFrame(id);
+                id = null;
+            }
         }
 
         center.addEventListener('keydown', handler, false);
