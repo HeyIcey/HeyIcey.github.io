@@ -14,7 +14,6 @@
     <canvas id="mainCanvas"></canvas>
     <script type="text/javascript" src="./js/main.js"></script>
     <script type="x-shader/x-vertex" id="vs">
-        // varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }
         uniform vec3 color;
         uniform vec3 light;
 
@@ -27,8 +26,7 @@
             // pass to fs
             vColor = color;
             vNormal = normalize(normalMatrix * normal);
-
-            // vec4 viewLight = modelViewMatrix * vec4(light, 1.0) + vec4(mbientColor, 1.0);
+            
             vec4 viewLight = modelViewMatrix * vec4(light, 1.0);
             vLight = viewLight.xyz;
 
@@ -36,9 +34,6 @@
         }
     </script>
     <script type="x-shader/x-fragment" id="fs">
-        // varying vec2 vUv; void main() { gl_FragColor = vec4(vUv.x, vUv.y, 0.0, 1.0); }
-        uniform vec3 uMaterialColor;
-
         varying vec3 vColor;
         varying vec3 vNormal;
         varying vec3 vLight;

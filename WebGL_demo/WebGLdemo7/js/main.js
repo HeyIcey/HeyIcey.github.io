@@ -70,15 +70,11 @@ function initObject() {
         vertexShader: document.getElementById('vs').textContent,
         fragmentShader: document.getElementById('fs').textContent,
         uniforms: {
-                color: {
-                    type: 'v3',
-                    value: new THREE.Color()
+                color: { // 基础色
+                    type: 'v3', // 指定变量类型为三维向量
+                    value: new THREE.Color('#cccccc')
                 },
-                uAmbientColor: {
-                    type: 'v3',
-                    value: new THREE.Color('#ffffff')
-                },
-                light: {
+                light: { // 光源位置
                     type: 'v3',
                     value: light.position
                 }
